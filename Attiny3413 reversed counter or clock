@@ -1,0 +1,239 @@
+int S = 59; // count seconds 
+int M = 59; // count minutes
+/* if code dosen't work remove int S & M (or comment them) and use the ones in comments.
+int sy = 9 // sekunnin yksiköt
+int sk = 6 // sekunnin kymmenet
+int my = 9 // minuutin yksiköt
+int mk = 5 // minuutin kymmenet
+*/
+//Pin 2-8 are the Attiny pins.
+long pinA = 2; // goes to pins 12 and 17 in 4-digit 7 segment.
+long pinB = 3; // goes to pins 11 and 16 in 4-digit 7 segment.
+long pinC = 4; // goes to pins 4 and 15 in 4-digit 7 segment.
+long pinD = 5; // goes to pins 1 and 6 in 4-digit 7 segment.
+long pinE = 6; // goes to pins 3 and 8 in 4-digit 7 segment.
+long pinF = 7; // goes to pins 18 and 13 in 4-digit 7 segment.
+long pinG = 8; // goes to pins 19 and 14 in 4-digit 7 segment.
+
+//Pin 9-12 are the Attiny pins to control wich digit to lit.
+long C1 = 9; // goes to pin 20 in 4-digit 7 segment.
+long C2 = 10; // goes to pin 5 in 4-digit 7 segment.
+long C3 = 11; // goes to pin 15 in 4-digit 7 segment.
+long C4 = 12; // goes to pin 10 in 4-digit 7 segment.
+
+void setup(){
+  // initialize the digital pins as outputs.
+  pinMode(pinA, OUTPUT);
+  pinMode(pinB, OUTPUT);
+  pinMode(pinC, OUTPUT);
+  pinMode(pinD, OUTPUT);
+  pinMode(pinE, OUTPUT);
+  pinMode(pinF, OUTPUT);
+  pinMode(pinG, OUTPUT);
+  pinMode(C1, OUTPUT);
+  pinMode(C2, OUTPUT);
+  pinMode(C3, OUTPUT);
+  pinMode(C4, OUTPUT);
+  print1((M/10)%10); // change to mk
+  print2(M%10); // change to my
+  print3((S/10)%10); // change to sk
+  print4(S%10); // change to sy
+}
+
+void loop(){
+  // if this works remove all commented code, 
+  // else remove code from loop and use commented code belowe.
+  // if still dosent work, then fix it.
+  delay(1000);
+  S--;
+  print3((S/10)%10);
+  print4(S%10);
+  if(S<0)
+  {
+    M--;
+    print1((M/10)%10);
+    print2(M%10);
+    S=59;
+  }
+  if(M<0)
+  {
+    //pommi räjähtää!
+  } // Loop ends here
+  /* if upper code dosen't work use this.
+  delay(1000);
+  sy--;
+  print4(sy);
+  if(sy <= 0)
+  {
+    sk--;
+    sy = 9;
+    print2(sk);
+  }
+  if(sk <= 0)
+  {
+    my--;
+    sk = 5;
+    print3(my);
+  }
+  if(my <= 0)
+  {
+    mk--;
+    sy = 9;
+    print4(mk);
+  }
+  if(mk < 0 && my < 0)
+  {
+    //pommi räjähtää
+  }
+  */// ends here.
+}
+//------------------------------//
+//numbers 0-9//
+void print1(int number) {//prints to digit 1 on display
+  delay(1);
+  digitalWrite(C1, LOW);
+  digitalWrite(C2, HIGH);
+  digitalWrite(C3, HIGH);
+  digitalWrite(C4, HIGH);
+  getNumber(number);
+}
+
+void print2(int number) {//prints to digit 2 on display
+  delay(1);
+  digitalWrite(C1, HIGH);
+  digitalWrite(C2, LOW);
+  digitalWrite(C3, HIGH);
+  digitalWrite(C4, HIGH);
+  getNumber(number);
+}
+void print3(int number) {//prints to digit 3 on display
+  delay(1);
+  digitalWrite(C1, HIGH);
+  digitalWrite(C2, HIGH);
+  digitalWrite(C3, LOW);
+  digitalWrite(C4, HIGH);
+  getNumber(number);
+}
+
+void print4(int number) {//prints to digit 4 on display
+  delay(1);
+  digitalWrite(C1, HIGH);
+  digitalWrite(C2, HIGH);
+  digitalWrite(C3, HIGH);
+  digitalWrite(C4, LOW);
+  getNumber(number);
+}
+
+//---------------------//
+void getNumber(int number) {
+if(number == 0) {
+  //prints zero
+  digitalWrite(pinA, HIGH);
+  digitalWrite(pinB, HIGH);
+  digitalWrite(pinC, HIGH);
+  digitalWrite(pinD, HIGH);
+  digitalWrite(pinE, HIGH);
+  digitalWrite(pinF, HIGH);
+  digitalWrite(pinG, LOW);
+}
+
+if(number == 1) {
+  //prints one
+  digitalWrite(pinA, LOW);
+  digitalWrite(pinB, HIGH);
+  digitalWrite(pinC, HIGH);
+  digitalWrite(pinD, LOW);
+  digitalWrite(pinE, LOW);
+  digitalWrite(pinF, LOW);
+  digitalWrite(pinG, LOW);
+}
+
+if(number == 2) {
+  //prints two
+  digitalWrite(pinA, HIGH);
+  digitalWrite(pinB, HIGH);
+  digitalWrite(pinC, LOW);
+  digitalWrite(pinD, HIGH);
+  digitalWrite(pinE, HIGH);
+  digitalWrite(pinF, LOW);
+  digitalWrite(pinG, HIGH);
+}
+
+if(number == 3) {
+  //prints three
+  digitalWrite(pinA, HIGH);
+  digitalWrite(pinB, HIGH);
+  digitalWrite(pinC, HIGH);
+  digitalWrite(pinD, HIGH);
+  digitalWrite(pinE, LOW);
+  digitalWrite(pinF, LOW);
+  digitalWrite(pinG, HIGH);
+}
+
+
+if(number == 4) {
+  //prints four
+  digitalWrite(pinA, LOW);
+  digitalWrite(pinB, HIGH);
+  digitalWrite(pinC, HIGH);
+  digitalWrite(pinD, LOW);
+  digitalWrite(pinE, LOW);
+  digitalWrite(pinF, HIGH);
+  digitalWrite(pinG, HIGH);
+}
+
+if(number == 5) {
+  //prints five
+  digitalWrite(pinA, HIGH);
+  digitalWrite(pinB, LOW);
+  digitalWrite(pinC, HIGH);
+  digitalWrite(pinD, HIGH);
+  digitalWrite(pinE, LOW);
+  digitalWrite(pinF, HIGH);
+  digitalWrite(pinG, HIGH);
+}
+
+if(number == 6) {
+  //prints six
+  digitalWrite(pinA, HIGH);
+  digitalWrite(pinB, LOW);
+  digitalWrite(pinC, HIGH);
+  digitalWrite(pinD, HIGH);
+  digitalWrite(pinE, HIGH);
+  digitalWrite(pinF, HIGH);
+  digitalWrite(pinG, HIGH);
+}
+
+if(number == 7) {
+  //prints seven
+  digitalWrite(pinA, HIGH);
+  digitalWrite(pinB, HIGH);
+  digitalWrite(pinC, HIGH);
+  digitalWrite(pinD, LOW);
+  digitalWrite(pinE, LOW);
+  digitalWrite(pinF, LOW);
+  digitalWrite(pinG, LOW);
+}
+
+if(number == 8) {
+  //prints eight
+  digitalWrite(pinA, HIGH);
+  digitalWrite(pinB, HIGH);
+  digitalWrite(pinC, HIGH);
+  digitalWrite(pinD, HIGH);
+  digitalWrite(pinE, HIGH);
+  digitalWrite(pinF, HIGH);
+  digitalWrite(pinG, HIGH);
+}
+
+if(number == 9) {
+  //prints nine
+  digitalWrite(pinA, HIGH);
+  digitalWrite(pinB, HIGH);
+  digitalWrite(pinC, HIGH);
+  digitalWrite(pinD, HIGH);
+  digitalWrite(pinE, LOW);
+  digitalWrite(pinF, HIGH);
+  digitalWrite(pinG, HIGH);
+}
+}
